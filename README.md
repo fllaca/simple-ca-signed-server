@@ -1,6 +1,6 @@
 # LetsEncrypt CA Signed Server - and auto-renewal!
 
-This project is a set of Ansible roles to perform a basic installation of HaProxy + Dehydrated (for automatic LetsEncrypt certificates renewal), using DuckDNS as DNS provider. 
+This project is a set of [Ansible](https://www.ansible.com/) roles and playbooks to perform a basic installation of HaProxy + [Dehydrated](https://github.com/lukas2511/dehydrated) (for automatic [Let's Encrypt CA](https://letsencrypt.org/) certificates renewal), using [DuckDNS](https://www.duckdns.org/)  as DNS provider. 
 
 The `dehydrated` role installs a cron job that will renew the certificates with the Let's Encrypt Authority every first day of month.
 
@@ -8,7 +8,7 @@ The `dehydrated` role installs a cron job that will renew the certificates with 
 
 1 - Copy `files-example` to files and replace the contents of those files with your DuckDNS domain and token.
 
-2 - Create an inventory file with the host of the server. Example:
+2 - Create an [Ansible inventory](http://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) file with the host of the server. Example:
 
 ```
 192.168.1.121
