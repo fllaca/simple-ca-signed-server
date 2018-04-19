@@ -1,0 +1,5 @@
+- hosts: tv
+  become: true
+
+  roles:
+    - role: dehydrated

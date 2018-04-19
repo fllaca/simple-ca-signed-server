@@ -1,0 +1,43 @@
+---
+- name: Install Dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+     - git
+
+- name: Clone Dehydrated
+  git:
+    repo: https://github.com/lukas2511/dehydrated
+    dest: /opt/dehydrated
+
+- name: Create Dehydrated Config File
+  copy:
+    src: dehydrated.conf
+    dest: /opt/dehydrated/config
+
+- name: Create DuckDns Hook
+  copy:
+    src: duckdns-hook.sh
+    dest: /opt/dehydrated/duckdns-hook.sh
+    mode: 755 
+
+- name: Copy Dehydrated domains file
+  copy:
+    src: domains.txt
+    dest: /opt/dehydrated/domains.txt
+
+- name: Copy DuckDNS token file
+  copy:
+    src: duckdns-token.txt
+    dest: /opt/dehydrated/duckdns-token.txt
+
+- name: Create Cron for renewals
+  cron:
+    day: 1
+    hour: 0
+    minute: 0
+    job: "/opt/dehydrated/dehydrated -c"
+    state: present
+
+

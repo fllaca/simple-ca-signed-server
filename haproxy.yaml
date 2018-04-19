@@ -1,0 +1,7 @@
+---
+- hosts: tv
+  become: true
+
+  roles:
+    - role: haproxy
+

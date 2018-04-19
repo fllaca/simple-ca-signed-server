@@ -1,0 +1,12 @@
+---
+- name: Instal HAProxy package
+  apt:
+    name: haproxy
+    state: present
+
+- name: Add HaProxy Configuration
+  copy: 
+    src: haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+  notify: Restart HaProxy
+
