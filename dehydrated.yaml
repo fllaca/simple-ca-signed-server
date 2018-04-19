@@ -1,4 +1,4 @@
-- hosts: tv
+- hosts: all
   become: true
 
   roles:
