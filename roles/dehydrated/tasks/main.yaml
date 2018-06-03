@@ -5,6 +5,7 @@
     state: present
   with_items:
      - git
+     - curl
 
 - name: Clone Dehydrated
   git:
@@ -22,6 +23,12 @@
     dest: /opt/dehydrated/duckdns-hook.sh
     mode: 755 
 
+- name: Create DuckDns Refresh Job
+  copy:
+    src: duckdns-refresh.sh
+    dest: /opt/dehydrated/duckdns-refresh.sh
+    mode: 755 
+
 - name: Copy Dehydrated domains file
   copy:
     src: domains.txt
@@ -32,12 +39,31 @@
     src: duckdns-token.txt
     dest: /opt/dehydrated/duckdns-token.txt
 
+- name: Try to find existing LetsEncrypt accounts
+  find: 
+    paths: /opt/dehydrated/accounts
+    file_type: directory 
+  register: existing_accounts
+
+- name: Register and Accept LetsEncrypt terms
+  shell: /opt/dehydrated/dehydrated --register --accept-terms
+  when: existing_accounts.matched|int == 0
+
+- name: Initial certificate generation
+  shell: /opt/dehydrated/dehydrated -c
+
 - name: Create Cron for renewals
   cron:
+    name: LetsEncrypt renewal
     day: 1
     hour: 0
     minute: 0
     job: "/opt/dehydrated/dehydrated -c"
     state: present
 
-
+- name: Create Cron for DuckDns refresh
+  cron:
+    name: DuckDNS refresh
+    minute: "*/10"
+    job: "/opt/dehydrated/duckdns-refresh.sh"
+    state: present
