@@ -15,8 +15,8 @@ case "$1" in
         domain="${2}"
         token=$(cat /opt/dehydrated/duckdns-token.txt)
         curl "https://www.duckdns.org/update?domains=$domain&token=$token&clear=true"
-	# this is need to set the domain again to the IP of the server
-	curl -k "https://www.duckdns.org/update?domains=$domain&token=$token&ip="
+        # this is need to set the domain again to the IP of the server
+        curl -k "https://www.duckdns.org/update?domains=$domain&token=$token&ip="
         echo
         ;;
     "deploy_cert")
