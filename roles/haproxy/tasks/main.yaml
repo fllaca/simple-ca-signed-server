@@ -6,7 +6,7 @@
 
 - name: Add HaProxy Configuration
   copy: 
-    src: haproxy.cfg
+    src: "{{ haproxy_config_file }}"
     dest: /etc/haproxy/haproxy.cfg
   notify: Restart HaProxy
 
