@@ -65,5 +65,5 @@
   cron:
     name: DuckDNS refresh
     minute: "*/10"
-    job: "/opt/dehydrated/duckdns-refresh.sh"
+    job: /bin/bash -c "/opt/dehydrated/duckdns-refresh.sh"
     state: present
